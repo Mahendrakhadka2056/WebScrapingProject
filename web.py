@@ -1,5 +1,5 @@
 import csv
-
+import sqlite3
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
@@ -27,6 +27,16 @@ class webscraping:
         with open(fle,'w',newline='') as csv_file:
             csv_writer = csv.writer(csv_file)
             csv_writer.writerows(df)
+
+        # insert data into database
+        conn = sqlite3.connect('GDP.db')
+        cur = conn.cursor()
+        query = """ create table GDP(Year int, GDP Nominal (Current USD) int, GDP Real  (Inflation adj.) int, GDP change int, GDP per capita int, Pop. change int, Population int)"""
+        cur.execute(query)
+        df.to_sql('GDP',conn,index=False,if_exists='replace')
+        conn.commit()
+        conn.close()
+
 
 
 ob = webscraping()
