@@ -31,7 +31,7 @@ class webscraping:
         # insert data into database
         conn = sqlite3.connect('GDP.db')
         cur = conn.cursor()
-        query = """ create table GDP(Year int, GDP Nominal (Current USD) int, GDP Real  (Inflation adj.) int, GDP change int, GDP per capita int, Pop. change int, Population int)"""
+        query = """ create table GDP(Year int, GDP_Nominal_Current USD int, GDP_Real_Inflation adj int, GDP_change int, GDP_per_capita int, Pop_change int, Population int)"""
         cur.execute(query)
         df.to_sql('GDP',conn,index=False,if_exists='replace')
         conn.commit()
