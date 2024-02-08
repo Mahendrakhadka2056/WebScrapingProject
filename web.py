@@ -8,6 +8,9 @@ class webscraping:
     url = 'https://www.worldometers.info/gdp/nepal-gdp/'
     data = requests.get(url).content
     new_data = BeautifulSoup(data,'html.parser')
+
+    def __init__(self):
+        pass
     def tableExtract(self):
         table1 = self.new_data.find_all(class_='table-responsive')
         table2 = self.new_data.find_all('th')
@@ -17,6 +20,7 @@ class webscraping:
         td_data = []
         for x in td_tags[2:]:
             td_data.append(x.get_text(strip=True))
+
         # Now add all data into table format
         table_columns = 7
         table_data = [td_data[x:x+table_columns] for x in range(0,len(td_data),table_columns)]
@@ -37,11 +41,15 @@ class webscraping:
         conn.commit()
         conn.close()
 
-
-
 ob = webscraping()
 ob.tableExtract()
 
+class DataExtract(webscraping):
+    def __init__(self):
+        super().__init__()
+    def data(self):
+        self.cur.execute('select * from gdp').fetchall()
 
 
-
+obj = DataExtract()
+obj.data()
