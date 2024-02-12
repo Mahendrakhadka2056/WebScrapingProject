@@ -44,12 +44,3 @@ class webscraping:
 ob = webscraping()
 ob.tableExtract()
 
-class DataExtract(webscraping):
-    def __init__(self):
-        super().__init__()
-    def data(self):
-        self.cur.execute('select * from gdp').fetchall()
-
-
-obj = DataExtract()
-obj.data()
